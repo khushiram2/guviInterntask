@@ -24,7 +24,6 @@ res.status(200).send({successStatus:true,message:"note created sucessfully", not
 export const updateNoteById = async (req,res) => {
 try {
     const {id,notedata}=req.body
-    console.log(notedata)
     const note=await NoteModel.findOne({_id:id})
     if(note.userId.toString()===notedata.userId.toString()){
         const updatedNote=await NoteModel.findByIdAndUpdate(id,notedata,{new:true})
@@ -45,7 +44,7 @@ try {
 export const getAllNotes =async (req,res) => {
 try {
     const userId=req.userId
-    const allNotes=await NoteModel.find({userId:userId})
+    const allNotes=await NoteModel.find({userId:userId}) .sort({ updatedAt: -1 })
     if(allNotes){
         res.status(200).send({successStatus:true,message:"note updated sucessfully", notes:allNotes})
     }else{
