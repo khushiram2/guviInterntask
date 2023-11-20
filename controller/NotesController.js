@@ -23,10 +23,10 @@ res.status(200).send({successStatus:true,message:"note created sucessfully", not
 
 export const updateNoteById = async (req,res) => {
 try {
-    const {id,notedata}=req.body
+    const {id,notedata,styles}=req.body
     const note=await NoteModel.findOne({_id:id})
     if(note.userId.toString()===notedata.userId.toString()){
-        const updatedNote=await NoteModel.findByIdAndUpdate(id,notedata,{new:true})
+        const updatedNote=await NoteModel.findByIdAndUpdate(id,{userId:notedata.userId,content:notedata.content,styles:styles},{new:true})
         if(updatedNote){
             res.status(200).send({successStatus:true,message:"note updated sucessfully", noteData:updatedNote})
         }else{
