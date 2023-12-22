@@ -6,8 +6,8 @@ import { NoteModel } from "../model/NoteModel.js"
 export const createNote = async(req,res) => {
 try {
     const userId=req.userId
-    const {title}=req.body
-    const noteCreated=await NoteModel.create({userId:userId,title:title})
+    const {title,endTime,timeItWillTake}=req.body
+    const noteCreated=await NoteModel.create({userId:userId,title:title,endTime:endTime,timeItWillTake:timeItWillTake})
     if(noteCreated){
 res.status(200).send({successStatus:true,message:"note created sucessfully", noteData:noteCreated})
     }else{
@@ -84,6 +84,21 @@ export const deleteNoteById =async (req,res) => {
         }
     } catch (error) {
         console.log({where:"deleting a note by id",error:error})
+    res.status(500).send({successStatus:false,message:"internal server occured"})
+    }
+
+}
+export const completeNoteById =async (req,res) => {
+    try {
+        const {id}=req.params
+        const completed=await NoteModel.updateOne({_id:id},{completed:true})
+        if(completed){
+            res.status(200).send({successStatus:true,message:"note marked completed sucessfully"})
+        }else{
+            res.status(200).send({successStatus:false,message:"couldn't mark note completed"})
+        }
+    } catch (error) {
+        console.log({where:"marking a note completed by id",error:error})
     res.status(500).send({successStatus:false,message:"internal server occured"})
     }
 
