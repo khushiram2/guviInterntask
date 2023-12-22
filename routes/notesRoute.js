@@ -1,9 +1,9 @@
-import {Router} from "express"
+import express from "express"
 import { isTokenValid } from "../middleware/cookieMiddleware.js"
 import { completeNoteById, createNote, deleteNoteById, getAllNotes, getNoteById, updateNoteById } from "../controller/NotesController.js"
 
 
-const router=Router()
+const router=express.Router()
 
 router.get("/test",(_,res)=>res.send("works fine"))
 
