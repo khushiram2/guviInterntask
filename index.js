@@ -1,4 +1,4 @@
-import express, { json } from "express"
+import express from "express"
 import * as dotnv from "dotenv"
 import { authRouter } from "./routes/authRoutes.js"
 import cors from "cors"
@@ -22,7 +22,7 @@ const corsOptions = {
       await checkNotesCompletion()
   }, interval);
 app.use(cors(corsOptions))
-app.use(json())
+app.use(express.json())
 app.use("/auth",authRouter)
 app.use("/note",noteRouter)
 
